@@ -24,7 +24,10 @@ class Login extends Component{
 									<h1>Login</h1>
 								</div>
 								<div className="row">
-									<form onSubmit={this.props.handleSubmit}>
+                            <form onSubmit={e => {
+                                e.preventDefault();
+                                this.props.login(this.props.values.email, this.props.values.password);
+                                    }}>
 										{fields.map((f, i) => {
 											return (
 												<div className="col-md-12">
@@ -67,7 +70,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default withFormik({
+export default connect(mapStateToProps,mapDispatchToProps)(withFormik({
     mapPropsToValues: () => ({
         email: '',
         password:''
@@ -76,7 +79,8 @@ export default withFormik({
         email: Yup.string().email('email is invalid').required('you need to login with email address'),
         password:Yup.string().required('you need to enter your password')
     }),
-    handleSubmit: (values, { setSubmitting }) => {
+    handleSubmit: (values, { setSubmitting },login) => {
         console.log('login attempt', values);
+        login(values.email, values.password);
     }
-})(connect(mapStateToProps,mapDispatchToProps)(Login));
+})(Login));
