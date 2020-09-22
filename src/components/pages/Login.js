@@ -79,4 +79,4 @@ export default withFormik({
     handleSubmit: (values, { setSubmitting }) => {
         console.log('login attempt', values);
     }
-})(Login);
+})(connect(mapStateToProps,mapDispatchToProps)(Login));
