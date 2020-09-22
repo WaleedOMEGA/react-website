@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import PageWrapper from './components/pageWrapper';
 import Home from './components/pages/Home';
@@ -7,37 +7,60 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Contact from './components/pages/Contact';
 import AdminWrapper from './components/AdminWrapper';
 import Login from './components/pages/Login';
-function App() {
-  return (
-	  <Router>
-		  <Route
-			  path='/admin'
-			  render={props => (
-				  <AdminWrapper>
-					  <Login />
-				  </AdminWrapper>
-				  
-			  )}
-		  />
+import Dashboard from './components/pages/Dashboard';
+import { connect } from 'react-redux';
+class App extends Component {
+	render() {
+		return (
+			<Router>
+				<Route
+					path='/admin'
+					render={props => {
+						return (
+							<AdminWrapper>
+								{this.props.auth.token ?
+									<Dashboard />
+									:
+									<Login />
+								}
+					  
+							</AdminWrapper>
+						)
+					}}
+				/>
 			
-		  <Route exact={true} path="/" render={props => (
-			  <PageWrapper>
-				  <Home {...props}/>
-			  </PageWrapper>
+				<Route exact={true} path="/" render={props => (
+					<PageWrapper>
+						<Home {...props} />
+					</PageWrapper>
 				)} />
-		  <Route path="/about" component={props => (
-			  <PageWrapper>
-				  <About {...props} />
-			  </PageWrapper>
-		  )} />
-		  <Route path="/contact" component={props => (
-			  <PageWrapper>
-				  <Contact {...props} />
-			  </PageWrapper>
-		  )} />
+				<Route path="/about" component={props => (
+					<PageWrapper>
+						<About {...props} />
+					</PageWrapper>
+				)} />
+				<Route path="/contact" component={props => (
+					<PageWrapper>
+						<Contact {...props} />
+					</PageWrapper>
+				)} />
 			
-		</Router>
-	);
+			</Router>
+		);
+	}
+}
+const mapStateToProps = state => {
+	return {
+		auth:state.auth
+	}
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+	return {
+
+	}
+}
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(App);

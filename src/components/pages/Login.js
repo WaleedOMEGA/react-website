@@ -24,10 +24,15 @@ class Login extends Component{
 									<h1>Login</h1>
 								</div>
 								<div className="row">
-                            <form onSubmit={e => {
-                                e.preventDefault();
-                                this.props.login(this.props.values.email, this.props.values.password);
-                                    }}>
+									<form
+										onSubmit={(e) => {
+											e.preventDefault();
+											this.props.login(
+												this.props.values.email,
+												this.props.values.password,
+											);
+										}}
+									>
 										{fields.map((f, i) => {
 											return (
 												<div className="col-md-12">
@@ -44,10 +49,11 @@ class Login extends Component{
 												</div>
 											);
 										})}
-                            </form>
-                            <div className="col-md-12">
-                                        <button className="btn btn-primary">Login</button>
-                            </div>
+
+										<div className="col-md-12">
+											<button className="btn btn-primary">Login</button>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -81,6 +87,6 @@ export default connect(mapStateToProps,mapDispatchToProps)(withFormik({
     }),
     handleSubmit: (values, { setSubmitting },login) => {
         console.log('login attempt', values);
-        login(values.email, values.password);
+        // login(values.email, values.password);
     }
 })(Login));
