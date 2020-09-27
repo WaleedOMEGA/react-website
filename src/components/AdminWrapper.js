@@ -12,6 +12,7 @@ import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Divider from '@material-ui/core/Divider';
+import Sidebar from './Common/Sidebar';
 const drawerwidth = 240;
 const styles = (theme) => ({
 	toolbar: {
@@ -102,9 +103,7 @@ class AdminWrapper extends Component{
 								</IconButton>
 							</div>
 							<Divider />
-							<List>
-								<ListItem>Dashboard</ListItem>
-							</List>
+							<Sidebar/>
 						</Drawer>
 						{this.props.children}
 					</div>
