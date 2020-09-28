@@ -8,51 +8,96 @@ import Contact from './components/pages/Contact';
 import AdminWrapper from './components/AdminWrapper';
 import LoginWrapper from './components/LoginWrapper';
 import Login from './components/pages/Login';
-import Dashboard from './components/pages/Dashboard';
+import Dashboard from './components/pages/Admin/Dashboard';
 import { connect } from 'react-redux';
+import Users from './components/pages/Admin/Users';
+import Posts from './components/pages/Admin/Posts';
 class App extends Component {
 	render() {
 		return (
 			<Router>
 				<Route
-					path='/admin'
-					render={props => {
+					exact={true}
+					path="/admin/users"
+					render={(props) => {
 						return (
 							<div>
-							{
-								this.props.auth.token ?
-									< AdminWrapper >
-										<Dashboard />
-										< /AdminWrapper>
-									:
-										<LoginWrapper>
-										< Login / >
-										</LoginWrapper>
-									
-								}
-											</div>
-					  
-							
-						)
+								{this.props.auth.token ? (
+									<AdminWrapper>
+										<Users />
+									</AdminWrapper>
+								) : (
+									<LoginWrapper>
+										<Login />
+									</LoginWrapper>
+								)}
+							</div>
+						);
 					}}
 				/>
-			
-				<Route exact={true} path="/" render={props => (
-					<PageWrapper>
-						<Home {...props} />
-					</PageWrapper>
-				)} />
-				<Route path="/about" component={props => (
-					<PageWrapper>
-						<About {...props} />
-					</PageWrapper>
-				)} />
-				<Route path="/contact" component={props => (
-					<PageWrapper>
-						<Contact {...props} />
-					</PageWrapper>
-				)} />
-			
+				<Route
+					exact={true}
+					path="/admin/posts"
+					render={(props) => {
+						return (
+							<div>
+								{this.props.auth.token ? (
+									<AdminWrapper>
+										<Posts />
+									</AdminWrapper>
+								) : (
+									<LoginWrapper>
+										<Login />
+									</LoginWrapper>
+								)}
+							</div>
+						);
+					}}
+				/>
+				<Route
+					path="/admin"
+					render={(props) => {
+						return (
+							<div>
+								{this.props.auth.token ? (
+									<AdminWrapper>
+										<Dashboard />
+									</AdminWrapper>
+								) : (
+									<LoginWrapper>
+										<Login />
+									</LoginWrapper>
+								)}
+							</div>
+						);
+					}}
+				/>
+
+				<Route
+					exact={true}
+					path="/"
+					render={(props) => (
+						<PageWrapper>
+							<Home {...props} />
+						</PageWrapper>
+					)}
+				/>
+				<Route
+					path="/about"
+					component={(props) => (
+						<PageWrapper>
+							<About {...props} />
+						</PageWrapper>
+					)}
+				/>
+				<Route
+					path="/contact"
+					component={(props) => (
+						<PageWrapper>
+							<Contact {...props} />
+						</PageWrapper>
+					)}
+				/>
 			</Router>
 		);
 	}

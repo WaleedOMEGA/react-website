@@ -15,6 +15,9 @@ import Divider from '@material-ui/core/Divider';
 import Sidebar from './Common/Sidebar';
 const drawerwidth = 240;
 const styles = (theme) => ({
+    root: {
+      display:'flex'  
+    },
 	toolbar: {
 		paddingRight: 24,
 	},
@@ -32,7 +35,8 @@ const styles = (theme) => ({
 			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.enteringScreen,
 		})
-	},
+    },
+    appBarSpace: theme.mixins.toolbar,
 	drawerPaper: {
 		position: 'relative',
 		whiteSpace: 'noWrap',
@@ -56,7 +60,13 @@ const styles = (theme) => ({
 		justifyContent: 'flex-end',
 		padding: '0 8px',
 		...theme.mixins.toolbar,
-	},
+    },
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing.units * 3,
+        height: '100vh',
+        overflow:'auto'
+    }
 });
 class AdminWrapper extends Component{
     constructor(props) {
@@ -75,12 +85,11 @@ class AdminWrapper extends Component{
     render() {
         const { classes } = this.props;
         return (
-					<div id="admin-page">
+					<div id="admin-page" className={classes.root}>
 						<AppBar
 							className={classNames(
 								classes.appBar,
-								this.state.open &&
-								classes.appBarShift
+								this.state.open && classes.appBarShift,
 							)}
 						>
 							<Toolbar className={classes.toolbar}>
@@ -93,7 +102,12 @@ class AdminWrapper extends Component{
 							</Toolbar>
 						</AppBar>
 						<Drawer
-							classes={{ paper: classNames(classes.drawerPaper,!this.state.open && classes.drawerPaperClose) }}
+							classes={{
+								paper: classNames(
+									classes.drawerPaper,
+									!this.state.open && classes.drawerPaperClose,
+								),
+							}}
 							variant="permanent"
 							open={true}
 						>
@@ -103,9 +117,12 @@ class AdminWrapper extends Component{
 								</IconButton>
 							</div>
 							<Divider />
-							<Sidebar/>
+							<Sidebar />
 						</Drawer>
-						{this.props.children}
+                <main className={classes.content}>
+                    <div className={classes.appBarSpace}/>
+                    {this.props.children}
+                </main>
 					</div>
 				);
     }
