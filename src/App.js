@@ -12,6 +12,8 @@ import Dashboard from './components/pages/Admin/Dashboard';
 import { connect } from 'react-redux';
 import Users from './components/pages/Admin/Users';
 import Posts from './components/pages/Admin/Posts';
+import AddPost from './components/pages/Admin/AddPost';
+import { Add } from '@material-ui/icons';
 class App extends Component {
 	render() {
 		return (
@@ -53,6 +55,29 @@ class App extends Component {
 							</div>
 						);
 					}}
+				/>
+				< Route
+				exact = {
+					true
+				}
+				path = "/admin/posts/add"
+				render = {
+					(props) => {
+						return (
+							<div>
+								{this.props.auth.token ? (
+									<AdminWrapper>
+										<AddPost />
+									</AdminWrapper>
+								) : (
+									<LoginWrapper>
+										<Login />
+									</LoginWrapper>
+								)}
+							</div>
+						);
+					}
+				}
 				/>
 				<Route
 					exact={true}
