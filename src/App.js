@@ -55,6 +55,7 @@ class App extends Component {
 					}}
 				/>
 				<Route
+					exact={true}
 					path="/admin"
 					render={(props) => {
 						return (
