@@ -23,3 +23,36 @@ export const getPosts = (token) => {
     }
 
 }
+
+export const addPost = (post,token) => {
+	return (dispatch) => {
+		API.addPost(post,token, (res) => {
+			dispatch({
+				type: 'POST_ADDED',
+				payload: res.data
+			});
+		});
+	};
+};
+
+export const updatePost = (post, token) => {
+    return (dispatch) => {
+        API.updatePost(post, token, (res) => {
+            dispatch({
+                type: 'UPDATED_POST',
+                payload: res.data
+            });
+        });
+    };
+};
+
+export const getSinglePost = (id, token) => {
+	return (dispatch) => {
+		API.getSinglePost(id, token, (res) => {
+			dispatch({
+				type: 'GOT_SINGLE',
+				payload: res.data
+			});
+		});
+	};
+};

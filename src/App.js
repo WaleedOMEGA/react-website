@@ -56,13 +56,10 @@ class App extends Component {
 						);
 					}}
 				/>
-				< Route
-				exact = {
-					true
-				}
-				path = "/admin/posts/add"
-				render = {
-					(props) => {
+				<Route
+					exact={true}
+					path="/admin/posts/:view"
+					render={(props) => {
 						return (
 							<div>
 								{this.props.auth.token ? (
@@ -76,8 +73,26 @@ class App extends Component {
 								)}
 							</div>
 						);
-					}
-				}
+					}}
+				/>
+				<Route
+					exact={true}
+					path="/admin/posts/:view/:id"
+					render={(props) => {
+						return (
+							<div>
+								{this.props.auth.token ? (
+									<AdminWrapper>
+										<AddPost />
+									</AdminWrapper>
+								) : (
+									<LoginWrapper>
+										<Login />
+									</LoginWrapper>
+								)}
+							</div>
+						);
+					}}
 				/>
 				<Route
 					exact={true}
